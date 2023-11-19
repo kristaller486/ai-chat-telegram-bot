@@ -1,22 +1,19 @@
 from __future__ import annotations
 import datetime
 import logging
-import os
 
 import tiktoken
 
 import openai
 
-import requests
 import json
 import httpx
 import io
-from datetime import date
-from calendar import monthrange
 
 from tenacity import retry, stop_after_attempt, wait_fixed, retry_if_exception_type
 
 from helper import ChatHelper
+from utils import localized_text
 from utils import is_direct_result
 from plugin_manager import PluginManager
 
@@ -61,31 +58,6 @@ def are_functions_available(model: str) -> bool:
     if model in ("gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-4", "gpt-4-32k","gpt-4-1106-preview"):
         return datetime.date.today() > datetime.date(2023, 6, 27)
     return True
-
-
-# Load translations
-parent_dir_path = os.path.join(os.path.dirname(__file__), os.pardir)
-translations_file_path = os.path.join(parent_dir_path, 'translations.json')
-with open(translations_file_path, 'r', encoding='utf-8') as f:
-    translations = json.load(f)
-
-
-def localized_text(key, bot_language):
-    """
-    Return translated text for a key in specified bot_language.
-    Keys and translations can be found in the translations.json.
-    """
-    try:
-        return translations[bot_language][key]
-    except KeyError:
-        logging.warning(f"No translation available for bot_language code '{bot_language}' and key '{key}'")
-        # Fallback to English if the translation is not available
-        if key in translations['en']:
-            return translations['en'][key]
-        else:
-            logging.warning(f"No english definition found for key '{key}' in translations.json")
-            # return key as text
-            return key
 
 
 class OpenAIHelper(ChatHelper):
