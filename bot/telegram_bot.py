@@ -18,7 +18,8 @@ from utils import is_group_chat, get_thread_id, message_text, wrap_with_indicato
     edit_message_with_retry, get_stream_cutoff_values, is_allowed, get_remaining_budget, is_admin, is_within_budget, \
     get_reply_to_message_id, add_chat_request_to_usage_tracker, error_handler, is_direct_result, handle_direct_result, \
     cleanup_intermediate_files
-from openai_helper import OpenAIHelper, localized_text
+from openai_helper import OpenAIHelper
+from utils import localized_text
 from usage_tracker import UsageTracker
 
 
