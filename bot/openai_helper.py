@@ -16,7 +16,7 @@ from calendar import monthrange
 
 from tenacity import retry, stop_after_attempt, wait_fixed, retry_if_exception_type
 
-from bot.helper import ChatHelper
+from helper import ChatHelper
 from utils import is_direct_result
 from plugin_manager import PluginManager
 
